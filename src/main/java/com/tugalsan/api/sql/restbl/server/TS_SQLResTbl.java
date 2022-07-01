@@ -6,6 +6,7 @@ import com.tugalsan.api.cast.server.*;
 import com.tugalsan.api.list.client.*;
 import com.tugalsan.api.time.client.*;
 import com.tugalsan.api.log.server.*;
+import com.tugalsan.api.unsafe.client.*;
 
 public class TS_SQLResTbl extends TGS_ListTable {
 
@@ -103,12 +104,12 @@ public class TS_SQLResTbl extends TGS_ListTable {
         d.ci("cast2SQLValue -> rowIdx: ", rowIdx, ", colIdx:", colIdx, ", tablename_dot_columnname:", tablename_dot_columnname, ", idAtColIdx: ", fromColIdx);
         var idObj = getValueAsObject(rowIdx, fromColIdx);
         if (idObj == null) {
-            throw new RuntimeException("cast2SQLValue.getValue is null");
+            TGS_UnSafe.catchMeIfUCan(d.className, "setSQLValue", "idObj == null");
         }
         if (idObj instanceof TS_SQLResTblValue val) {
             d.ce("cast2SQLValue.val.getTableAndColumnName:", val.tableAndColumnName);
             d.ce("cast2SQLValue.val.getId: ", val.id);
-            throw new RuntimeException("cast2SQLValue is already instanceof TS_SQLPOJO_TableSQLValue");
+            TGS_UnSafe.catchMeIfUCan(d.className, "setSQLValue", "idObj instanceof TS_SQLResTblValue val");
         }
         var idStr = String.valueOf(idObj);
         var cellSQL = new TS_SQLResTblValue(tablename_dot_columnname.toString(), idStr);
@@ -118,7 +119,7 @@ public class TS_SQLResTbl extends TGS_ListTable {
     public void setDateValue(int rowIdx, int colIdx, int fromColIdx) {
         var valO = getValueAsObject(rowIdx, fromColIdx);
         if (valO == null) {
-            throw new RuntimeException("setDateValue.getValue is null");
+            TGS_UnSafe.catchMeIfUCan(d.className, "setDateValue", "valO == null");
         }
         var valStr = String.valueOf(valO);
         var valLng = Long.valueOf(valStr);
@@ -129,7 +130,7 @@ public class TS_SQLResTbl extends TGS_ListTable {
     public void setTimeValue(int rowIdx, int colIdx, int fromColIdx) {
         var valO = getValueAsObject(rowIdx, fromColIdx);
         if (valO == null) {
-            throw new RuntimeException("setTimeValue.getValue is null");
+            TGS_UnSafe.catchMeIfUCan(d.className, "setTimeValue", "valO == null");
         }
         var valStr = String.valueOf(valO);
         var valLng = Long.valueOf(valStr);
