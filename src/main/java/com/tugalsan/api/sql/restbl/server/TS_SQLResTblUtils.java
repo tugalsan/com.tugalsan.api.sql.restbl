@@ -34,7 +34,10 @@ public class TS_SQLResTblUtils {
     }
 
     private static void fill(TS_SQLSelectExecutor executor, TGS_ListTable destTable, boolean addHeaders, List<String> useOptionalHeaders) {
-        executor.walk(rs -> d.ci("fill", () -> rs.meta.command()), rs -> fill(rs, destTable, addHeaders, useOptionalHeaders));
+        executor.walk(rs -> {
+            d.ci("fill", "empty", rs.meta.command());
+            fill(rs, destTable, addHeaders, useOptionalHeaders);
+        }, rs -> fill(rs, destTable, addHeaders, useOptionalHeaders));
     }
 
     public static void fill(TS_SQLResultSet rs, TGS_ListTable destTable) {
