@@ -9,7 +9,7 @@ import com.tugalsan.api.sql.select.server.*;
 
 public class TS_SQLResTblUtils {
 
-    final private static TS_Log d = TS_Log.of(TS_SQLResTblUtils.class.getSimpleName());
+    final private static TS_Log d = TS_Log.of(TS_SQLResTblUtils.class);
 
     public static TGS_ListTable of(List list) {
         var t = new TS_SQLResTbl();

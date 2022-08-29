@@ -10,7 +10,7 @@ import com.tugalsan.api.unsafe.client.*;
 
 public class TS_SQLResTbl extends TGS_ListTable {
 
-    final private static TS_Log d = TS_Log.of(TS_SQLResTbl.class.getSimpleName());
+    final private static TS_Log d = TS_Log.of(TS_SQLResTbl.class);
 
     public static TS_SQLResTbl of() {
         return new TS_SQLResTbl();

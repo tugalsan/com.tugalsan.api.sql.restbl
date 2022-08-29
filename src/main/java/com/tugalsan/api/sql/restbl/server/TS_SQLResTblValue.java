@@ -6,7 +6,7 @@ import com.tugalsan.api.unsafe.client.*;
 
 public class TS_SQLResTblValue {
 
-    final private static TS_Log d = TS_Log.of(TS_SQLResTblValue.class.getSimpleName());
+    final private static TS_Log d = TS_Log.of(TS_SQLResTblValue.class);
 
     public String tableAndColumnName;
     public String id;
