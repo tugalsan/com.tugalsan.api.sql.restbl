@@ -21,7 +21,7 @@ public class TS_SQLResTblValue {
     public String getTableName() {
         var first_ = tableAndColumnName.indexOf('.');
         if (first_ == -1) {
-            TGS_UnSafe.catchMeIfUCan(d.className, "getTableName", "tableAndColumnName:[" + tableAndColumnName + "].first_.indexOf('.') == -1");
+            TGS_UnSafe.thrw(d.className, "getTableName", "tableAndColumnName:[" + tableAndColumnName + "].first_.indexOf('.') == -1");
         }
         String tableName = tableAndColumnName.substring(0, first_);
         d.ci("getTableName->.tableAndColumnName", tableAndColumnName, "first_", first_, "tableName as tableAndColumnName.substring(0, first_)", tableName);
@@ -38,11 +38,11 @@ public class TS_SQLResTblValue {
         {
             first_ = cn.indexOf('_');
             if (first_ == -1) {
-                TGS_UnSafe.catchMeIfUCan(d.className, "getLinkedTableName", "tableAndColumnName:[" + tableAndColumnName + "]&rest:[" + cn + "].first_.indexOf('_') == -1");
+                TGS_UnSafe.thrw(d.className, "getLinkedTableName", "tableAndColumnName:[" + tableAndColumnName + "]&rest:[" + cn + "].first_.indexOf('_') == -1");
             }
             second_ = cn.indexOf('_', first_ + 1);
             if (second_ == -1) {
-                TGS_UnSafe.catchMeIfUCan(d.className, "getLinkedTableName", "tableAndColumnName:[" + tableAndColumnName + "]&rest:[" + cn + "].second_.indexOf('_') == -1");
+                TGS_UnSafe.thrw(d.className, "getLinkedTableName", "tableAndColumnName:[" + tableAndColumnName + "]&rest:[" + cn + "].second_.indexOf('_') == -1");
             }
         }
         return cn.substring(first_ + 1, second_);
@@ -54,11 +54,11 @@ public class TS_SQLResTblValue {
         {
             first_ = cn.indexOf('_');
             if (first_ == -1) {
-                TGS_UnSafe.catchMeIfUCan(d.className, "getLinkedColName", "tableAndColumnName:[" + tableAndColumnName + "]&rest:[" + cn + "].first_.indexOf('_') == -1");
+                TGS_UnSafe.thrw(d.className, "getLinkedColName", "tableAndColumnName:[" + tableAndColumnName + "]&rest:[" + cn + "].first_.indexOf('_') == -1");
             }
             second_ = cn.indexOf('_', first_ + 1);
             if (second_ == -1) {
-                TGS_UnSafe.catchMeIfUCan(d.className, "getLinkedColName", "tableAndColumnName:[" + tableAndColumnName + "]&rest:[" + cn + "].second_.indexOf('_') == -1");
+                TGS_UnSafe.thrw(d.className, "getLinkedColName", "tableAndColumnName:[" + tableAndColumnName + "]&rest:[" + cn + "].second_.indexOf('_') == -1");
             }
         }
         return cn.substring(second_ + 1);
