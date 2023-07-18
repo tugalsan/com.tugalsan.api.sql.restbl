@@ -12,6 +12,10 @@ public class TS_SQLResTbl extends TGS_ListTable {
 
     final private static TS_Log d = TS_Log.of(TS_SQLResTbl.class);
 
+    private TS_SQLResTbl(){
+        super(true);
+    }
+    
     public static TS_SQLResTbl of() {
         return new TS_SQLResTbl();
     }

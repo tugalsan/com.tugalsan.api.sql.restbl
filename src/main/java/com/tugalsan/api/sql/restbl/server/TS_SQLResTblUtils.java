@@ -12,7 +12,7 @@ public class TS_SQLResTblUtils {
     final private static TS_Log d = TS_Log.of(TS_SQLResTblUtils.class);
 
     public static TGS_ListTable of(List list) {
-        var t = new TS_SQLResTbl();
+        var t = TS_SQLResTbl.of();
         if (list == null) {
             return t;
         }
