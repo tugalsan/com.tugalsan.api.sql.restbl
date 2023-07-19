@@ -21,7 +21,7 @@ public class TS_SQLResTbl extends TGS_ListTable {
     }
 
     public static TS_SQLResTbl of(List list) {
-        var t = new TS_SQLResTbl();
+        var t = TS_SQLResTbl.of();
         IntStream.range(0, list.size()).forEachOrdered(ri -> {
             t.setValue(ri, 0, list.get(ri));
         });
@@ -30,7 +30,7 @@ public class TS_SQLResTbl extends TGS_ListTable {
 
     @Override
     public TS_SQLResTbl cloneIt() {
-        var clone = new TS_SQLResTbl();
+        var clone = TS_SQLResTbl.of();
         clone.sniffRows(this);
         clone.setHeaderBold(super.isHeaderBold());
         return clone;
