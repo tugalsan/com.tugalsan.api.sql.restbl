@@ -87,7 +87,7 @@ public class TS_SQLResTbl extends TGS_ListTable {
     }
 
     public void cast2DateColumn(int colIdx, int fromColIdx, Integer skipHeaderCount) {
-        int rowSize = rows.size();
+        var rowSize = rows.size();
         int cs;
         for (var ri = skipHeaderCount == null ? 0 : skipHeaderCount; ri < rowSize; ri++) {
             cs = getColumnSize(ri);

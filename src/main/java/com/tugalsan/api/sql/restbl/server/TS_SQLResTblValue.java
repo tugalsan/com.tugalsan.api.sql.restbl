@@ -23,7 +23,7 @@ public class TS_SQLResTblValue {
         if (first_ == -1) {
             TGS_UnSafe.thrw(d.className, "getTableName", "tableAndColumnName:[" + tableAndColumnName + "].first_.indexOf('.') == -1");
         }
-        String tableName = tableAndColumnName.substring(0, first_);
+        var tableName = tableAndColumnName.substring(0, first_);
         d.ci("getTableName->.tableAndColumnName", tableAndColumnName, "first_", first_, "tableName as tableAndColumnName.substring(0, first_)", tableName);
         return tableName;
     }
