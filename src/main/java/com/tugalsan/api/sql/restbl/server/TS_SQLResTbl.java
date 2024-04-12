@@ -6,16 +6,17 @@ import com.tugalsan.api.cast.server.*;
 import com.tugalsan.api.list.client.*;
 import com.tugalsan.api.time.client.*;
 import com.tugalsan.api.log.server.*;
-import com.tugalsan.api.unsafe.client.*;
+import com.tugalsan.api.union.client.TGS_UnionExcuse;
+import com.tugalsan.api.union.client.TGS_UnionExcuseVoid;
 
 public class TS_SQLResTbl extends TGS_ListTable {
 
     final private static TS_Log d = TS_Log.of(TS_SQLResTbl.class);
 
-    private TS_SQLResTbl(){
+    private TS_SQLResTbl() {
         super(true);
     }
-    
+
     public static TS_SQLResTbl of() {
         return new TS_SQLResTbl();
     }
@@ -53,12 +54,19 @@ public class TS_SQLResTbl extends TGS_ListTable {
     }
 
     public boolean isSQLValue(int rowIndex, int columnIndex) {
-        return getValueAsObject(rowIndex, columnIndex) instanceof TS_SQLResTblValue;
+        var u = getValueAsObject(rowIndex, columnIndex);
+        if (u.isExcuse()) {
+            return false;
+        }
+        return u.value() instanceof TS_SQLResTblValue;
     }
 
-    public TS_SQLResTblValue getValueAsSQLValue(int rowIndex, int columnIndex) {
-        var r = getValueAsObject(rowIndex, columnIndex);
-        return r != null && r instanceof TS_SQLResTblValue ? (TS_SQLResTblValue) r : null;
+    public TGS_UnionExcuse<TS_SQLResTblValue> getValueAsSQLValue(int rowIndex, int columnIndex) {
+        var u = getValueAsObject(rowIndex, columnIndex);
+        if (u.isExcuse()){
+            return u.toExcuse();
+        }
+        return TGS_UnionExcuse.of((TS_SQLResTblValue)u.value());
     }
 
     // COLUMNWISE ---------------------------------------------------------------------------------
@@ -104,50 +112,54 @@ public class TS_SQLResTbl extends TGS_ListTable {
         setValue(rowIdx, colIdx, cellSQL);
     }
 
-    public void setSQLValue(int rowIdx, int colIdx, CharSequence tablename_dot_columnname, int fromColIdx) {//fromColIdx = id
+    public TGS_UnionExcuseVoid setSQLValue(int rowIdx, int colIdx, CharSequence tablename_dot_columnname, int fromColIdx) {//fromColIdx = id
         d.ci("cast2SQLValue -> rowIdx: ", rowIdx, ", colIdx:", colIdx, ", tablename_dot_columnname:", tablename_dot_columnname, ", idAtColIdx: ", fromColIdx);
-        var idObj = getValueAsObject(rowIdx, fromColIdx);
-        if (idObj == null) {
-            TGS_UnSafe.thrw(d.className, "setSQLValue", "idObj == null");
+        var u = getValueAsObject(rowIdx, fromColIdx);
+        if (u.isExcuse()) {
+            return u.toExcuseVoid();
         }
+        var idObj = u.value();
         if (idObj instanceof TS_SQLResTblValue val) {
             d.ce("cast2SQLValue.val.getTableAndColumnName:", val.tableAndColumnName);
             d.ce("cast2SQLValue.val.getId: ", val.id);
-            TGS_UnSafe.thrw(d.className, "setSQLValue", "idObj instanceof TS_SQLResTblValue val");
+            TGS_UnionExcuseVoid.ofExcuse(d.className, "setSQLValue", "idObj instanceof TS_SQLResTblValue val");
         }
         var idStr = String.valueOf(idObj);
         var cellSQL = new TS_SQLResTblValue(tablename_dot_columnname.toString(), idStr);
         setValue(rowIdx, colIdx, cellSQL);
+        return TGS_UnionExcuseVoid.ofVoid();
     }
 
-    public void setDateValue(int rowIdx, int colIdx, int fromColIdx) {
+    public TGS_UnionExcuseVoid setDateValue(int rowIdx, int colIdx, int fromColIdx) {
         var valO = getValueAsObject(rowIdx, fromColIdx);
         if (valO == null) {
-            TGS_UnSafe.thrw(d.className, "setDateValue", "valO == null");
+            TGS_UnionExcuseVoid.ofExcuse(d.className, "setDateValue", "valO == null");
         }
         var valStr = String.valueOf(valO);
         var valLng = Long.valueOf(valStr);
         var dateStr = TGS_Time.toString_dateOnly(valLng);
         setValue(rowIdx, colIdx, dateStr);
+        return TGS_UnionExcuseVoid.ofVoid();
     }
 
-    public void setTimeValue(int rowIdx, int colIdx, int fromColIdx) {
+    public TGS_UnionExcuseVoid setTimeValue(int rowIdx, int colIdx, int fromColIdx) {
         var valO = getValueAsObject(rowIdx, fromColIdx);
         if (valO == null) {
-            TGS_UnSafe.thrw(d.className, "setTimeValue", "valO == null");
+            TGS_UnionExcuseVoid.ofExcuse(d.className, "setTimeValue", "valO == null");
         }
         var valStr = String.valueOf(valO);
         var valLng = Long.valueOf(valStr);
         var timeStr = TGS_Time.toString_timeOnly_simplified(valLng);
         setValue(rowIdx, colIdx, timeStr);
+        return TGS_UnionExcuseVoid.ofVoid();
     }
 
     public void setValuePrecision(int rowIndex, int columnIndex, int precision) {
         var val = getValueAsDouble(rowIndex, columnIndex);
-        if (val == null) {
+        if (val.isExcuse()) {
             return;
         }
-        var str = TS_CastUtils.toString(val, precision);
+        var str = TS_CastUtils.toString(val.value(), precision);
         setValue(rowIndex, columnIndex, str);
     }
 
