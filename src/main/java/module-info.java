@@ -1,5 +1,5 @@
 module com.tugalsan.api.sql.restbl {
-    requires com.tugalsan.api.runnable;
+    
     requires com.tugalsan.api.unsafe;
     requires com.tugalsan.api.cast;
     requires com.tugalsan.api.list;
