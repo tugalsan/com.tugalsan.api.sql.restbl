@@ -15,7 +15,7 @@ public class TS_SQLResTblValue {
 
     @Override
     public String toString() {
-        return TGS_StringUtils.concat(TS_SQLResTblValue.class.getSimpleName(), ":{tableAndColumnName=[", tableAndColumnName, "], id=", String.valueOf(id), ", prefix=[", prefix, "], suffix=[", suffix, "]");
+        return TGS_StringUtils.cmn().concat(TS_SQLResTblValue.class.getSimpleName(), ":{tableAndColumnName=[", tableAndColumnName, "], id=", String.valueOf(id), ", prefix=[", prefix, "], suffix=[", suffix, "]");
     }
 
     public String getTableName() {
