@@ -6,6 +6,7 @@ import com.tugalsan.api.list.client.*;
 import com.tugalsan.api.log.server.*;
 import com.tugalsan.api.sql.resultset.server.*;
 import com.tugalsan.api.sql.select.server.*;
+import com.tugalsan.api.thread.server.sync.TS_ThreadSyncTrigger;
 
 public class TS_SQLResTblUtils {
 
@@ -20,35 +21,38 @@ public class TS_SQLResTblUtils {
         return t;
     }
 
-    public static void fill(TS_SQLSelectExecutor executor, TGS_ListTable destTable) {
-        fill(executor, destTable, false, null);
+    public static void fill(TS_ThreadSyncTrigger servletKillTrigger, TS_SQLSelectExecutor executor, TGS_ListTable destTable) {
+        fill(servletKillTrigger, executor, destTable, false, null);
     }
 
-    public static void fill(TS_SQLSelectExecutor executor, TGS_ListTable destTable, boolean addHeaders) {
-        fill(executor, destTable, addHeaders, null);
+    public static void fill(TS_ThreadSyncTrigger servletKillTrigger, TS_SQLSelectExecutor executor, TGS_ListTable destTable, boolean addHeaders) {
+        fill(servletKillTrigger, executor, destTable, addHeaders, null);
     }
 
-    public static void fill(TS_SQLSelectExecutor executor, TGS_ListTable destTable, List<String> useOptionalHeaders) {
-        fill(executor, destTable, false, useOptionalHeaders);
+    public static void fill(TS_ThreadSyncTrigger servletKillTrigger, TS_SQLSelectExecutor executor, TGS_ListTable destTable, List<String> useOptionalHeaders) {
+        fill(servletKillTrigger, executor, destTable, false, useOptionalHeaders);
     }
 
-    private static void fill(TS_SQLSelectExecutor executor, TGS_ListTable destTable, boolean addHeaders, List<String> useOptionalHeaders) {
-        executor.walk(rs -> fill(rs, destTable, addHeaders, useOptionalHeaders), rs -> fill(rs, destTable, addHeaders, useOptionalHeaders));
+    private static void fill(TS_ThreadSyncTrigger servletKillTrigger, TS_SQLSelectExecutor executor, TGS_ListTable destTable, boolean addHeaders, List<String> useOptionalHeaders) {
+        executor.walk(rs -> fill(servletKillTrigger, rs, destTable, addHeaders, useOptionalHeaders), rs -> fill(servletKillTrigger, rs, destTable, addHeaders, useOptionalHeaders));
     }
 
-    public static void fill(TS_SQLResultSet rs, TGS_ListTable destTable) {
-        fill(rs, destTable, false, null);
+    public static void fill(TS_ThreadSyncTrigger servletKillTrigger, TS_SQLResultSet rs, TGS_ListTable destTable) {
+        fill(servletKillTrigger, rs, destTable, false, null);
     }
 
-    public static void fill(TS_SQLResultSet rs, TGS_ListTable destTable, boolean addHeaders) {
-        fill(rs, destTable, addHeaders, null);
+    public static void fill(TS_ThreadSyncTrigger servletKillTrigger, TS_SQLResultSet rs, TGS_ListTable destTable, boolean addHeaders) {
+        fill(servletKillTrigger, rs, destTable, addHeaders, null);
     }
 
-    public static void fill(TS_SQLResultSet rs, TGS_ListTable destTable, List<String> useOptionalHeaders) {
-        fill(rs, destTable, false, useOptionalHeaders);
+    public static void fill(TS_ThreadSyncTrigger servletKillTrigger, TS_SQLResultSet rs, TGS_ListTable destTable, List<String> useOptionalHeaders) {
+        fill(servletKillTrigger, rs, destTable, false, useOptionalHeaders);
     }
 
-    private static void fill(TS_SQLResultSet rs, TGS_ListTable destTable, boolean addHeaders, List<String> useOptionalHeaders) {
+    private static void fill(TS_ThreadSyncTrigger servletKillTrigger, TS_SQLResultSet rs, TGS_ListTable destTable, boolean addHeaders, List<String> useOptionalHeaders) {
+        if (servletKillTrigger.hasTriggered()) {
+            return;
+        }
         destTable.clear();
         rs.walkCells(rs0 -> d.ci("fill", "empty", rs.meta.command()), (ri, ci) -> {
             destTable.setValue(ri, ci, rs.str.get(ri, ci));
