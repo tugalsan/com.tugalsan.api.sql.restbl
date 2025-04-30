@@ -17,7 +17,7 @@ public class TS_SQLResTblUtils {
         if (list == null) {
             return t;
         }
-        IntStream.range(0, list.size()).forEachOrdered(i -> t.setValue(i, list.get(i)));
+        IntStream.range(0, list.size()).forEachOrdered(i -> t.setValues(i, list.get(i)));
         return t;
     }
 
