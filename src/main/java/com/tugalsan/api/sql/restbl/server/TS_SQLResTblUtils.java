@@ -1,12 +1,12 @@
 package com.tugalsan.api.sql.restbl.server;
 
+import module com.tugalsan.api.list;
+import module com.tugalsan.api.log;
+import module com.tugalsan.api.sql.resultset;
+import module com.tugalsan.api.sql.select;
+import module com.tugalsan.api.thread;
 import java.util.*;
 import java.util.stream.*;
-import com.tugalsan.api.list.client.*;
-import com.tugalsan.api.log.server.*;
-import com.tugalsan.api.sql.resultset.server.*;
-import com.tugalsan.api.sql.select.server.*;
-import com.tugalsan.api.thread.server.sync.TS_ThreadSyncTrigger;
 
 public class TS_SQLResTblUtils {
 

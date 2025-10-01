@@ -1,9 +1,8 @@
 package com.tugalsan.api.sql.restbl.server;
 
-import com.tugalsan.api.function.client.maythrowexceptions.unchecked.TGS_FuncMTUUtils;
-import com.tugalsan.api.log.server.*;
-import com.tugalsan.api.string.client.*;
-
+import module com.tugalsan.api.function;
+import module com.tugalsan.api.log;
+import module com.tugalsan.api.string;
 
 public class TS_SQLResTblValue {
 

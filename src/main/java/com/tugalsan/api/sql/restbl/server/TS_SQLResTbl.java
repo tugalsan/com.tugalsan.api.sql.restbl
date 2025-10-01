@@ -1,12 +1,12 @@
 package com.tugalsan.api.sql.restbl.server;
 
+import module com.tugalsan.api.cast;
+import module com.tugalsan.api.function;
+import module com.tugalsan.api.list;
+import module com.tugalsan.api.time;
+import module com.tugalsan.api.log;
 import java.util.*;
 import java.util.stream.*;
-import com.tugalsan.api.cast.server.*;
-import com.tugalsan.api.function.client.maythrowexceptions.unchecked.TGS_FuncMTUUtils;
-import com.tugalsan.api.list.client.*;
-import com.tugalsan.api.time.client.*;
-import com.tugalsan.api.log.server.*;
 
 
 public class TS_SQLResTbl extends TGS_ListTable {
